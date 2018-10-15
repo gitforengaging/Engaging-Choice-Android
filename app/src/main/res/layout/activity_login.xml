@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".login.LoginActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_55"
+                android:src="@drawable/film_time" />
+
+            <EditText
+                android:id="@+id/login_et_email"
+                android:layout_width="@dimen/dp_267"
+                android:layout_height="@dimen/dp_42"
+                android:layout_marginTop="@dimen/dp_103"
+                android:background="@drawable/bg_button"
+                android:hint="@string/email"
+                android:fontFamily="@font/opensans_regular"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="@dimen/dp_7"
+                android:textSize="@dimen/sp_14" />
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_267"
+                android:layout_height="@dimen/dp_42"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@drawable/bg_button"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/login_et_password"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="@string/password"
+                    android:inputType="textWebPassword"
+                    android:paddingLeft="@dimen/dp_7"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/login_tv_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp_17"
+                    android:gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/show"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/login_tv_signin"
+                android:layout_width="@dimen/dp_267"
+                android:layout_height="@dimen/dp_42"
+                android:layout_marginTop="@dimen/dp_40"
+                android:background="@drawable/bg_signinbutton"
+                android:gravity="center"
+                android:text="@string/signin"
+                android:fontFamily="@font/opensans_bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/login_tv_recover_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="@string/recover_password"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/blue_3d6ad3"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_103"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/blue_3d6ad3"
+                android:layout_marginBottom="@dimen/dp_20"/>
+        </LinearLayout>
+    </ScrollView>
+</layout>

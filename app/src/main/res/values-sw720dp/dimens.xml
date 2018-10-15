@@ -1,0 +1,58 @@
+<resources>
+    <!--Ratio for 10 inch dimesnion is default * 1.5-->
+    <!--Film time-->
+    <dimen name="sp_20">30sp</dimen>
+    <dimen name="sp_45">67.5sp</dimen>
+    <dimen name="sp_42">63sp</dimen>
+    <dimen name="sp_6">9sp</dimen>
+    <dimen name="sp_10">15sp</dimen>
+    <dimen name="sp_16">24sp</dimen>
+    <dimen name="sp_59">88.5sp</dimen>
+    <dimen name="sp_11">16.5sp</dimen>
+    <dimen name="sp_12">18sp</dimen>
+
+    <dimen name="dp_1">1.5dp</dimen>
+    <dimen name="dp_44">66dp</dimen>
+    <dimen name="dp_60">90dp</dimen>
+    <dimen name="dp_13">19.5dp</dimen>
+    <dimen name="dp_15">22.5dp</dimen>
+    <dimen name="dp_51">76.5dp</dimen>
+    <dimen name="dp_234">351dp</dimen>
+    <dimen name="dp_11">16.5dp</dimen>
+    <dimen name="dp_27">40.5dp</dimen>
+    <dimen name="dp_5">7.5dp</dimen>
+    <dimen name="dp_10">15dp</dimen>
+    <dimen name="dp_30">45dp</dimen>
+    <dimen name="dp_8">12dp</dimen>
+    <dimen name="dp_20">30dp</dimen>
+    <dimen name="dp_55">82.5sp</dimen>
+    <dimen name="dp_70">105dp</dimen>
+    <dimen name="dp_22">33dp</dimen>
+    <dimen name="dp_100">150dp</dimen>
+    <dimen name="dp_56">84dp</dimen>
+    <dimen name="dp_71">106.5dp</dimen>
+    <dimen name="dp_87">130.5dp</dimen>
+    <dimen name="dp_40">60dp</dimen>
+    <dimen name="dp_122">183dp</dimen>
+    <dimen name="dp_12">18dp</dimen>
+    <dimen name="dp_123">184.5dp</dimen>
+    <dimen name="dp_163">244.5dp</dimen>
+    <dimen name="dp_34">51dp</dimen>
+    <dimen name="dp_14">21dp</dimen>
+    <dimen name="dp_47">70.5dp</dimen>
+    <dimen name="sp_30">45sp</dimen>
+    <dimen name="dp_206">309dp</dimen>
+    <dimen name="dp_138">207dp</dimen>
+    <dimen name="dp_103">154.5dp</dimen>
+    <dimen name="dp_267">400.5dp</dimen>
+    <dimen name="dp_42">63dp</dimen>
+    <dimen name="dp_236">354dp</dimen>
+    <dimen name="dp_88">132dp</dimen>
+    <dimen name="dp_95">142.5dp</dimen>
+    <dimen name="dp_120">180dp</dimen>
+    <dimen name="dp_23">34.5dp</dimen>
+    <dimen name="dp_24">36dp</dimen>
+    <dimen name="dp_3">4.5dp</dimen>
+
+</resources>
+

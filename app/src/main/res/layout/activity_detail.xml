@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_fafafa"
+        tools:context="com.aap.filmtime.home.detail.DetailActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_236"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/detail_iv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_206"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/thumbnail" />
+
+                <FrameLayout
+                    android:id="@+id/detail_fr_cross_cont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_15">
+
+                    <View
+                        android:layout_width="@dimen/dp_23"
+                        android:layout_height="@dimen/dp_24"
+                        android:background="@drawable/bg_cross_icon" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/white_cross_icon" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/detail_play_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/play_icon" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/detail_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/boss_baby"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/detail_tv_channel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_title"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/by_dreamsworks_tv"
+                    android:textColor="@color/black" />
+
+                <com.aap.engagingchoice.customviews.EcPoweredByView
+                    android:id="@+id/detail_tv_powered_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_channel"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_3" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_88"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:background="@drawable/bg_detail_match"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center"
+                        android:text="@string/ninety_six"
+                        android:textColor="@color/blue_3d6ad3"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center"
+                        android:text="@string/match"
+                        android:textColor="@color/blue_3d6ad3"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detail_tv_movie_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_powered_by"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/movie_info"
+                    android:textColor="@color/grey_7c838b"
+                    android:textSize="@dimen/sp_13" />
+
+
+                <TextView
+                    android:id="@+id/detail_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_movie_info"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/release_date"
+                    android:textColor="@color/grey_7c838b"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_movie_info"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_toRightOf="@+id/detail_tv_date"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/release_date_value"
+                    android:textColor="@color/grey_343e4a"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/similar_movies"
+                android:textColor="@color/grey_343e4a"
+                android:textSize="@dimen/sp_20" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_138"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/detail_iv_movie_1"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_marginTop="@dimen/dp_22"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/thumbnail_m" />
+
+                <TextView
+                    android:id="@+id/detail_tv_movie_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_23"
+                    android:layout_toRightOf="@+id/detail_iv_movie_1"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/dummy_1"
+                    android:textColor="@color/grey_343e4a"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/detail_iv_powered_by_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_movie_name_1"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_toRightOf="@+id/detail_iv_movie_1"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/dummy_1_powered_by_1"
+                    android:textColor="@color/grey_7c838b"
+                    android:textSize="@dimen/sp_11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_iv_powered_by_1"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_toRightOf="@+id/detail_iv_movie_1"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/dummy_1_detail_1"
+                    android:textColor="@color/grey_5f656d"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_138"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/detail_iv_movie_2"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_marginTop="@dimen/dp_22"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/thumbnail_m" />
+
+                <TextView
+                    android:id="@+id/detail_tv_movie_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_23"
+                    android:layout_toRightOf="@+id/detail_iv_movie_2"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/dummy_1"
+                    android:textColor="@color/grey_343e4a"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/detail_iv_powered_by_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_tv_movie_name_2"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_toRightOf="@+id/detail_iv_movie_2"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/dummy_1_powered_by_1"
+                    android:textColor="@color/grey_7c838b"
+                    android:textSize="@dimen/sp_11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_iv_powered_by_2"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_toRightOf="@+id/detail_iv_movie_2"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/dummy_1_detail_1"
+                    android:textColor="@color/grey_5f656d"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.aap.engagingchoice.ProfileActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_75"
+                android:background="@color/white_fafafa">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_new_mob" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_24dp"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/complete_your_profile"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/activity_profile_tv_descrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_15"
+                android:fontFamily="@font/opensans_regular"
+                android:lineSpacingExtra="@dimen/sp_8"
+                android:text="@string/complete_profile_descrp"
+                android:textColor="@color/grey_7c838b"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                style="@style/profile_title"
+                android:text="@string/email" />
+
+            <EditText
+                android:id="@+id/activity_profile_et_email"
+                style="@style/Profile_title_value"
+                android:inputType="textEmailAddress" />
+
+
+            <TextView
+                style="@style/profile_title"
+                android:text="@string/mobile_num" />
+
+            <EditText
+                android:id="@+id/activity_profile_et_number"
+                style="@style/Profile_title_value"
+                android:inputType="number"
+                android:maxLength="13" />
+
+            <TextView
+                android:id="@+id/activity_profile_tv_proceed"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_25"
+                android:background="@drawable/bg_proceed_view"
+                android:gravity="center"
+                android:text="@string/proceed"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/activity_profile_ll_cancel"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_27"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    android:textColor="@color/red_c82630"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/red_c82630" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_profile_cont_proceed_cancel_land"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_32"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/activity_profile_tv_proceed_land"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_proceed_view"
+                        android:gravity="center"
+                        android:text="@string/proceed"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/activity_profile_ll_cancel_land"
+                        android:layout_width="@dimen/dp_45"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cancel"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="@color/red_c82630" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:background="@color/red_c82630" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

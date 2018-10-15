@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Engaging Choice</string>
+    <string name="powered_by"><i>Powered by</i></string>
+    <string name="choose_offer">Choose Offer</string>
+
+    <!--Row of offer list-->
+    <string name="buy1_get1">Buy1 Get1</string>
+    <string name="dates">Valid Till July 20, 2018</string>
+    <string name="valid_till">Valid Till</string>
+    <string name="offer_name">Naperville Limo Car Naperville</string>
+    <string name="Off">OFF</string>
+    <string name="view">View</string>
+    <string name="no_data">No Offers</string>
+    <string name="dummy_offer_descrp">Uber is offering up to 45% off on New York rides. Offer valid upto a max value of $35, and applicable only on rides greater than 2km. Valid for Uber rides in New York. No promo code required. Book a ride now.</string>
+    <string name="no_network">Internet connection appears to be offline.</string>
+    <!--Offer engagement buttons-->
+    <string name="later">LATER</string>
+    <string name="skip">SKIP</string>
+    <string name="get_offer">GET OFFER</string>
+
+    <string name="complete_your_profile">Complete your profile</string>
+    <string name="complete_profile_descrp">Your Profile not complete yet, Please\ncomplete your profile first and get more \noffers.</string>
+    <string name="email">Email</string>
+    <string name="mobile_num">Mobile Number</string>
+    <string name="proceed">Proceed</string>
+    <string name="cancel">Cancel</string>
+
+    <!--Profile-->
+    <string name="required_field">Please fill all required fields</string>
+    <string name="guest_user_msg">Your Profile is not complete yet,Please complete your profile first using new email id and get more offers.</string>
+    <string name="new_user_msg">Your Profile is not complete yet,Please complete your profile first and get more offers.</string>
+</resources>
