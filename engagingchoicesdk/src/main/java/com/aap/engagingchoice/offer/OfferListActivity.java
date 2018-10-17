@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -66,20 +67,24 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_offer_list);
-        mGoogleApiClient = getAPIClientInstance(this);
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        }
+        mSavedInstance = savedInstanceState;
         setHWOfRow();
         CallBackClass.getInstance().setmListener(this);
         setRecylerViewLayouts();
-        mSavedInstance = savedInstanceState;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mBinding.activityOfferIvLoadingLayout.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
             mBinding.activityOfferIvLoadingLayout.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
-        requestGPSSettings();
+        if (mSavedInstance == null) {
+            mGoogleApiClient = getAPIClientInstance(this);
+            if (mGoogleApiClient != null) {
+                mGoogleApiClient.connect();
+            }
+            requestGPSSettings();
+        } else {
+            callApi();
+        }
     }
 
     private GoogleApiClient getAPIClientInstance(Context context) {
@@ -137,7 +142,11 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
                     checkPermissionLoc();
                     break;
                 case Activity.RESULT_CANCELED:
-                    callApi();
+                    if (mSavedInstance == null) {
+                        callApi();
+                    } else {
+                        callOfferListApi();
+                    }
                     break;
             }
         }
@@ -182,7 +191,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             }
         } else {
             mEcOfferResponse = (EcOfferListResponse) mSavedInstance.getSerializable(Constants.OFFER_LIST_DATA);
-            successOfferData(mEcOfferResponse);
+            if (mEcOfferResponse != null) {
+                successOfferData(mEcOfferResponse);
+            }
         }
     }
 
@@ -259,7 +270,7 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
      */
     @Override
     public void successOfferData(EcOfferListResponse ecOfferListResponse) {
-        if (!this.isFinishing() || !this.isDestroyed()) {
+        if (!this.isFinishing() || !this.isDestroyed() && ecOfferListResponse != null && ecOfferListResponse.getData() != null) {
             mEcOfferResponse = ecOfferListResponse;
             mAdapter.setOfferResponse(mEcOfferResponse);
             List<EcOfferListResponse.DataBean> ecOfferListResponseList = new ArrayList<>();
@@ -301,7 +312,7 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
      */
     @Override
     public void failiure(String msg) {
-        if (!this.isFinishing() || !this.isDestroyed()) {
+        if (!this.isFinishing() || !this.isDestroyed() && !(TextUtils.isEmpty(msg))) {
             mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
             CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
             Log.e("OfferListActivity", msg);

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="thumb_width">30dp</dimen>
     <dimen name="thumb_height">30dp</dimen>
 
@@ -651,6 +651,7 @@
     <dimen name="dp_420">420dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 
 </resources>

@@ -25,6 +25,7 @@ public class HomeActivity extends BaseActivity {
                 return false;
             }
         });
+
         mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

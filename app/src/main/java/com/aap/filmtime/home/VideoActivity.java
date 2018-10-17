@@ -1,11 +1,13 @@
 package com.aap.filmtime.home;
 
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -44,5 +46,37 @@ public class VideoActivity extends AppCompatActivity {
             });
         }
 
+        mBinding.activityVideoFrCrossCont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        mBinding.activityVideoFrCrossContLand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mBinding.activityVideoFrCrossCont.setVisibility(View.GONE);
+            mBinding.activityVideoFrCrossContLand.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.activityVideoFrCrossCont.setVisibility(View.VISIBLE);
+            mBinding.activityVideoFrCrossContLand.setVisibility(View.GONE);
+        }
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mBinding.activityVideoFrCrossCont.setVisibility(View.GONE);
+            mBinding.activityVideoFrCrossContLand.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.activityVideoFrCrossCont.setVisibility(View.VISIBLE);
+            mBinding.activityVideoFrCrossContLand.setVisibility(View.GONE);
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--Ratio for 10 inch dimesnion is default * 1.5-->
     <!--Film time-->
     <dimen name="sp_20">30sp</dimen>
@@ -53,6 +53,7 @@
     <dimen name="dp_23">34.5dp</dimen>
     <dimen name="dp_24">36dp</dimen>
     <dimen name="dp_3">4.5dp</dimen>
-
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 </resources>
 

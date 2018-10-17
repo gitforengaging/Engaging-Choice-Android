@@ -246,7 +246,7 @@
                         android:fontFamily="@font/opensans_semibold"
                         android:text="Uber Ride Offer"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/sp_20" />
 
                     <TextView
                         android:id="@+id/activity_detail_tv_offer_descrp_land"
@@ -344,7 +344,7 @@
                         android:fontFamily="@font/opensans_semibold"
                         android:text="Uber Ride Offer"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/sp_20" />
 
                     <TextView
                         android:id="@+id/activity_detail_tv_offer_descrp"

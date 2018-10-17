@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--Film time-->
     <!--Correct ratio-->
     <dimen name="dp_1">1.3dp</dimen>
@@ -58,6 +58,7 @@
     <dimen name="sp_20">26sp</dimen>
     <dimen name="sp_59">76.7sp</dimen>
     <dimen name="sp_12">15.6sp</dimen>
-
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 
 </resources>

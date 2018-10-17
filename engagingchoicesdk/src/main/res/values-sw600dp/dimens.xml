@@ -47,5 +47,6 @@
     <dimen name="sp_13">16.9sp</dimen>
     <dimen name="sp_8">10.4sp</dimen>
     <dimen name="sp_10">13sp</dimen>
+    <dimen name="sp_19">24.7sp</dimen>
 
 </resources>

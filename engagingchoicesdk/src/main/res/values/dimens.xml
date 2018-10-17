@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_1">1dp</dimen>
@@ -51,6 +51,7 @@
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_17">17sp</dimen>
     <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_19">19sp</dimen>
     <dimen name="sp_13">13sp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_12">12sp</dimen>
