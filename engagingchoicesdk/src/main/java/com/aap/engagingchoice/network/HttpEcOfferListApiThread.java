@@ -46,8 +46,12 @@ public class HttpEcOfferListApiThread extends Thread {
             if (!TextUtils.isEmpty(email)) {
                 Log.e("email", email);
             }
-
-            url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email);
+            if (mLat == 0 && mLng == 0) {
+                // null values
+                url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email);
+            } else {
+                url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email + "/" + String.valueOf(mLat) + "/" + String.valueOf(mLng));
+            }
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(Constants.REQUEST_TYPE_GET);
             String publishSecretKey = EngagingChoiceKey.getInstance().getPublishSecretKey();
@@ -120,7 +124,7 @@ public class HttpEcOfferListApiThread extends Thread {
             Message msg = mHandler.obtainMessage();
             msg.what = -1;
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.FAILIURE_INFO, e.getMessage());
+            bundle.putString(Constants.FAILIURE_INFO_EXCEPTION, e.getMessage());
             msg.setData(bundle);
             msg.sendToTarget();
             e.printStackTrace();
@@ -128,9 +132,9 @@ public class HttpEcOfferListApiThread extends Thread {
             Message msg = mHandler.obtainMessage();
             msg.what = -1;
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.FAILIURE_INFO, e.getMessage());
-            msg.sendToTarget();
+            bundle.putString(Constants.FAILIURE_INFO_EXCEPTION, e.getMessage());
             msg.setData(bundle);
+            msg.sendToTarget();
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();

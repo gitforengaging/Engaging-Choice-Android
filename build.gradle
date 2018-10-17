@@ -1,33 +1,37 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
-        jcenter()
         maven {
             url 'https://maven.google.com'
         }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
         maven {
             url 'https://maven.google.com'
         }
+        jcenter()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    COMPILE_SDK_VERSION = 27
+    MIN_SDK_VERSION = 19
+    ANDROID_SUPPORT_VERSION = '27.1.1'
+    VERSION_CODE = 1
+    VERSION_NAME = '1.0'
 }

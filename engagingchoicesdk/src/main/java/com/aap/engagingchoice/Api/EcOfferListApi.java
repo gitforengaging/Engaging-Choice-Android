@@ -4,6 +4,8 @@ package com.aap.engagingchoice.Api;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.aap.engagingchoice.network.HttpEcOfferListApiThread;
 import com.aap.engagingchoice.pojo.EcOfferListResponse;
@@ -22,14 +24,15 @@ public class EcOfferListApi implements Handler.Callback {
     public EcOfferListApi() {
     }
 
-    public void callEcOfferListApi(double lat,double lng) {
+    public void callEcOfferListApi(double lat, double lng) {
         mHandler = new Handler(Looper.getMainLooper(), this);
-        HttpEcOfferListApiThread thread = new HttpEcOfferListApiThread(mHandler,lat,lng);
+        HttpEcOfferListApiThread thread = new HttpEcOfferListApiThread(mHandler, lat, lng);
         thread.start();
     }
 
     /**
      * This method sets the listener ListenerOfEcOfferListApi to get callback of success and failiure
+     *
      * @param listListener
      */
     public void setOfferListListener(ListenerOfEcOfferListApi listListener) {
@@ -42,8 +45,16 @@ public class EcOfferListApi implements Handler.Callback {
             EcOfferListResponse content = (EcOfferListResponse) message.getData().getSerializable(Constants.OFFER_LIST);
             mOfferListDataListener.successOfferData(content);
         } else {
-            String failiureMsg = message.getData().getString(Constants.FAILIURE_INFO);
-            mOfferListDataListener.failiure(failiureMsg);
+            if (message.getData().containsKey(Constants.FAILIURE_INFO)) {
+                String failiureMsg = message.getData().getString(Constants.FAILIURE_INFO);
+                mOfferListDataListener.failiure(failiureMsg);
+            } else if (message.getData().containsKey(Constants.FAILIURE_INFO_EXCEPTION)) {
+                String failiureMsg = message.getData().getString(Constants.FAILIURE_INFO_EXCEPTION);
+                if(!TextUtils.isEmpty(failiureMsg)){
+                    mOfferListDataListener.failiure(failiureMsg);
+                    Log.e("failiure", failiureMsg);
+                }
+            }
         }
         mHandler.removeCallbacksAndMessages(null);
         return false;

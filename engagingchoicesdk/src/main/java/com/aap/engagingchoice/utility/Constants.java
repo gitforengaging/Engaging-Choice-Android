@@ -6,6 +6,7 @@ package com.aap.engagingchoice.utility;
 public class Constants {
     /*Constants*/
     public static final String FAILIURE_INFO = "failiure_info";
+    public static final String FAILIURE_INFO_EXCEPTION = "failiure_info_EXCEPTION";
     public static final String OFFER_LIST = "offer_list";
     public static final String TOKEN = "token";
     public static final String REQUEST_TYPE_GET = "GET";
