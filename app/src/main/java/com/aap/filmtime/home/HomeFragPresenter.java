@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 
-import com.aap.engagingchoice.Api.EcContentApi;
+import com.aap.engagingchoice.Api.EcMediaContent;
 import com.aap.engagingchoice.Api.ListenerOfEcContentApi;
 import com.aap.engagingchoice.pojo.EcContentResponse;
 import com.aap.filmtime.R;
@@ -27,16 +27,11 @@ public class HomeFragPresenter {
 
     public List<String> addAllUrls() {
         List<String> urlList = new ArrayList<>();
-
-//        urlList.add("https://i.pinimg.com/236x/e2/ce/03/e2ce03889615b5d5f6dd06f0cb3345f8.jpg");
         urlList.add("https://momsall.com/wp-content/uploads/2018/04/The-Boss-Baby.jpg");
         urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHD-CZiPZt-bd95akXKDMqICVaxGVYr0GAbN49spvbN0EpznJ2ZQ");
         urlList.add("https://lumiere-a.akamaihd.net/v1/images/open-uri20160107-21163-1uluvkw_9a643c10.jpeg");
         urlList.add("https://lumiere-a.akamaihd.net/v1/images/r_thegooddinosaur_header_bcfd18b3.jpeg?region=0,0,2048,808");
         urlList.add("https://d13ezvd6yrslxm.cloudfront.net/wp/wp-content/images/megamind-trailer-3.jpg");
-//        urlList.add("https://i.pinimg.com/236x/fe/7a/d4/fe7ad4215e8b11f760b3c1c85af09a9e--mountain-illustration-mountain-landscape.jpg");
-//        urlList.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaGx8CeLPJ7jekirBvPuN1sumFNerdoTx9pM3SpB6dmhYADAmY");
-
         return urlList;
     }
 
@@ -84,10 +79,9 @@ public class HomeFragPresenter {
         this.mMvpListener = fragMvpView;
     }
 
-    public void callContentListApi(ListenerOfEcContentApi listener, Context context) {
-        EcContentApi ecContentApi = new EcContentApi(context);
-        ecContentApi.callEcContentApi();
-        ecContentApi.setListenerOfResponse(listener);
+    public void callContentListApi(ListenerOfEcContentApi listener) {
+        EcMediaContent.getInstance().callEcContentApi();
+        EcMediaContent.getInstance().setListenerOfResponse(listener);
     }
 
 

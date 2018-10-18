@@ -41,6 +41,9 @@ public class Constants {
     public static final String VIDEO_VALUE = "seekbarvalue";
     public static final String VIDEO_URL = "videourl";
 
+    /*Limits of Content Api*/
+    public static final String PER_PAGE = "per_page";
+    public static final String PAGE = "page";
     /*Update info api request param*/
     public static final String EMAIL = "email";
     public static final String OLD_EMAIL = "old_email";

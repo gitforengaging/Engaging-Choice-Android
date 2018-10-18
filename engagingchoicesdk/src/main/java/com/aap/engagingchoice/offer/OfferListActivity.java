@@ -179,7 +179,11 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
                 getLocation();
             } else {
                 // call offerlist api
-                callApi();
+                if (mSavedInstance == null) {
+                    callApi();
+                } else {
+                    callOfferListApi();
+                }
             }
         }
     }
@@ -382,7 +386,11 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             mLat = location.getLatitude();
             mLng = location.getLongitude();
             Log.e("location", String.valueOf(mLat + " " + mLng));
-            callApi();
+            if (mSavedInstance == null) {
+                callApi();
+            } else {
+                callOfferListApi();
+            }
         }
 
     }

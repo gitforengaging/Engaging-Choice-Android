@@ -29,19 +29,27 @@ import java.util.List;
  */
 public class HttpEcContentApiThread extends Thread {
     private Handler mHandler;
+    private int limit, offset;
 
-    public HttpEcContentApiThread(Handler mHandler) {
+    public HttpEcContentApiThread(Handler mHandler, int limit, int offset) {
         this.mHandler = mHandler;
+        this.limit = limit;
+        this.offset = offset;
     }
 
 
     @Override
     public void run() {
-        URL url;
+        URL url = null;
         HttpURLConnection urlConnection = null;
         try {
             String Baseurl = Constants.BASE_URL;
-            url = new URL(Baseurl + Constants.CONTENT_LIST_API);
+            if (limit != 0 || offset != 0) {
+                url = new URL(Baseurl + Constants.CONTENT_LIST_API + "?" + Constants.PER_PAGE + "=" + limit + "&" + Constants.PAGE + "=" + offset);
+            } else {
+                url = new URL(Baseurl + Constants.CONTENT_LIST_API);
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(Constants.REQUEST_TYPE_GET);
             String publishSecretKey = EngagingChoiceKey.getInstance().getPublishSecretKey();

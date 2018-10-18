@@ -1,7 +1,6 @@
 package com.aap.engagingchoice.Api;
 
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -15,11 +14,17 @@ import java.util.List;
 /**
  * This Class is used to call HttpEcContentApiThread
  */
-public class EcContentApi implements Handler.Callback {
+public class EcMediaContent implements Handler.Callback {
+    private static EcMediaContent mEcContentApi;
     private ListenerOfEcContentApi mListener;
     private Handler mHandler;
+    private int limit, offset;
 
-    public EcContentApi(Context context) {
+    public static EcMediaContent getInstance() {
+        if (mEcContentApi == null) {
+            mEcContentApi = new EcMediaContent();
+        }
+        return mEcContentApi;
     }
 
     /**
@@ -27,12 +32,13 @@ public class EcContentApi implements Handler.Callback {
      */
     public void callEcContentApi() {
         mHandler = new Handler(Looper.getMainLooper(), this);
-        HttpEcContentApiThread thread = new HttpEcContentApiThread(mHandler);
+        HttpEcContentApiThread thread = new HttpEcContentApiThread(mHandler, limit, offset);
         thread.start();
     }
 
     /**
      * This method sets the listener ListenerOfEcContentApi to get callback of success and failiure
+     *
      * @param listenerOfResponse
      */
     public void setListenerOfResponse(ListenerOfEcContentApi listenerOfResponse) {
@@ -41,6 +47,7 @@ public class EcContentApi implements Handler.Callback {
 
     /**
      * This method calls from HttpEcContentApiThread class
+     *
      * @param message
      * @return
      */
@@ -56,6 +63,11 @@ public class EcContentApi implements Handler.Callback {
         mHandler.removeCallbacksAndMessages(null);
         return false;
 
+    }
+
+    public void setPageLimit(int offset, int limit) {
+        this.limit = limit;
+        this.offset = offset;
     }
 
 }
