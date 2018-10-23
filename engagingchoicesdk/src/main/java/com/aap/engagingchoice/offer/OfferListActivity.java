@@ -291,7 +291,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             } else {
                 mBinding.activityRecylerOffer.setVisibility(View.GONE);
                 mBinding.activityTvNoOffers.setVisibility(View.VISIBLE);
-                CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+                if (CallBackListenerClass.getInstance().getmListener() != null) {
+                    CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+                }
                 finish();
             }
 
@@ -318,7 +320,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     public void failiure(String msg) {
         if (!this.isFinishing() || !this.isDestroyed() && !(TextUtils.isEmpty(msg))) {
             mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
-            CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+            if (CallBackListenerClass.getInstance().getmListener() != null) {
+                CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+            }
             Log.e("OfferListActivity", msg);
             finish();
         }
@@ -329,7 +333,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
      */
     @Override
     public void onBackPressed() {
-        CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        if (CallBackListenerClass.getInstance().getmListener() != null) {
+            CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        }
         finish();
     }
 

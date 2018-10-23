@@ -59,7 +59,9 @@ public class OfferDetailPresenter {
         ecOfferActionApi.callEcOfferActionApi();
         CallBackClass.getInstance().getmListener().callBackListenerToOfferList();
         if (typeOfCount != Constants.CONSUMED) {
-            CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+            if (CallBackListenerClass.getInstance().getmListener() != null) {
+                CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+            }
         }
     }
 

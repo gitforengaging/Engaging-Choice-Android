@@ -52,7 +52,9 @@ public class OfferWebViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        if (CallBackListenerClass.getInstance().getmListener() != null) {
+            CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        }
         finish();
     }
 }

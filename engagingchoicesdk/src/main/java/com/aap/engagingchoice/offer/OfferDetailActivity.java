@@ -199,6 +199,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
 
     /**
      * Call offer action api
+     *
      * @param typeOfCount contains type of action - later , skip ,getoffer
      */
     private void callOfferActionApi(int typeOfCount) {
@@ -208,6 +209,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
 
     /**
      * This method calls when orientation done
+     *
      * @param newConfig
      */
     @Override
@@ -222,7 +224,9 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
 
     @Override
     public void onBackPressed() {
-        CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        if (CallBackListenerClass.getInstance().getmListener() != null) {
+            CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
+        }
         finish();
     }
 
@@ -289,6 +293,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
 
     /**
      * This method is called from OfferDetailPresenter class
+     *
      * @param data contains offer data
      */
     @Override
@@ -367,6 +372,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
 
     /**
      * This method is called from OfferDetailPresenter class
+     *
      * @param data contains offer data
      */
     @Override

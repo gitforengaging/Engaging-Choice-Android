@@ -50,8 +50,9 @@ public class HttpEcOfferListApiThread extends Thread {
                 // null values
                 url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email);
             } else {
-                url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email + "/" + String.valueOf(mLat) + "/" + String.valueOf(mLng));
+                url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email + "?" + Constants.LATITUDE + String.valueOf(mLat) + "&" + Constants.LONGITUDE + String.valueOf(mLng));
             }
+            Log.e("selectedurl", String.valueOf(url));
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(Constants.REQUEST_TYPE_GET);
             String publishSecretKey = EngagingChoiceKey.getInstance().getPublishSecretKey();

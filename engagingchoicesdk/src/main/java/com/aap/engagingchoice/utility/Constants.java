@@ -57,6 +57,11 @@ public class Constants {
     public static final String ACTION = "action";
     public static final String CONTENT_ID = "content_id";
 
+    /*OFFER LIST API PARAMS*/
+    public static final String LATITUDE = "latitude=";
+    public static final String LONGITUDE = "longitude=";
+
+
     public static final int CONSUMED = 1;
     public static final int LATER = 2;
     public static final int SKIP = 3;

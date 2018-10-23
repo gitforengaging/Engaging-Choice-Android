@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
         mBinding.fragmentHomeRecylerViewRecommended.setNestedScrollingEnabled(false);
         // call content list api of Engaging Choice content - SDK
         if (Utils.isNetworkAvailable(getActivity(), true)) {
-            mHomeFragPresenter.callContentListApi(this, getContext());
+            mHomeFragPresenter.callContentListApi(this);
         }
     }
 
