@@ -19,6 +19,14 @@ OfferListActivity is Activity which shows Offers.
 
 - Android minimum SDK version 19
 
+- Enable Databinding in Build.gradle
+
+  dataBinding {
+  
+        enabled = true
+        
+    }
+
 
 # How To Use
 
@@ -115,6 +123,10 @@ In xml file you can use this view as mentioned below with custom height and widt
 5.FIFTH STEP
 
 -OFFERS LIST
+
+Implement the EcCallBackOfOfferListener listener to get callback after user has viewed the Offer
+
+CallBackListenerClass.getInstance().setmListener(this);                                                                    
 
 You can call offerlist by below mention method
 
