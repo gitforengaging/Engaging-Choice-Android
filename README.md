@@ -49,11 +49,15 @@ Offset and limit are optional but you can use these fields for pagination by pas
 
 EcMediaContent.getInstance().setPageLimit(0,10);
 
-And you need to call below method to get detail of mediaContent and it's required method to call for media content detail
+And you need to call below methods to get detail of mediaContent 
+
+Implement ListenerOfEcContentApi interface
+
+EcMediaContent.getInstance().setListenerOfResponse(listener);
 
 EcMediaContent.getInstance().callEcContentApi();
 
-EcMediaContent.getInstance().setListenerOfResponse(listener);
+
 
 // Get Media Content detail
 
