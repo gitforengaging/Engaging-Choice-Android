@@ -55,10 +55,12 @@ public class EcMediaContent implements Handler.Callback {
     public boolean handleMessage(Message message) {
         if (message.what == HttpURLConnection.HTTP_OK) {
             List<EcContentResponse.DataBean> content = (List<EcContentResponse.DataBean>) message.getData().getSerializable("content_list");
-            mListener.successData(content);
+            if (mListener != null)
+                mListener.successData(content);
         } else {
             String failiureMsg = message.getData().getString("failiure_info");
-            mListener.failiure(failiureMsg);
+            if (mListener != null)
+                mListener.failiure(failiureMsg);
         }
         mHandler.removeCallbacksAndMessages(null);
         return false;
