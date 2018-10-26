@@ -32,9 +32,8 @@ public class EcGridView extends FrameLayout {
         mPoweredByIv = new ImageView(context, attrs, defStyleAttr);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        int dp = (int) (getResources().getDimension(R.dimen.dp_40) / getResources().getDisplayMetrics().density);
-        FrameLayout.LayoutParams paramsPoweredBy = new FrameLayout.LayoutParams(
-                dp, dp);
+//        int dp = (int) (getResources().getDimension(R.dimen.dp_40) / getResources().getDisplayMetrics().density);
+        FrameLayout.LayoutParams paramsPoweredBy = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsPoweredBy.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         this.addView(mCoverIv, params);
         this.addView(mPoweredByIv, paramsPoweredBy);

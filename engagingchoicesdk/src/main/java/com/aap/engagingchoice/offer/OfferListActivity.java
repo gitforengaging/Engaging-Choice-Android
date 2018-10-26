@@ -197,6 +197,8 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             mEcOfferResponse = (EcOfferListResponse) mSavedInstance.getSerializable(Constants.OFFER_LIST_DATA);
             if (mEcOfferResponse != null) {
                 successOfferData(mEcOfferResponse);
+            } else {
+                callOfferListApi();
             }
         }
     }
@@ -244,7 +246,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
      */
     private void callOfferListApi() {
         mBinding.activityOfferIvLoadingLayout.setVisibility(View.VISIBLE);
-        EcOfferListApi ecOfferListApi = new EcOfferListApi();
+        mBinding.activityOfferProgress.setVisibility(View.VISIBLE);
+        EcOfferListApi ecOfferListApi = EcOfferListApi.getInstance();
+        ecOfferListApi.removeAllCallbackAndMessages();
         ecOfferListApi.callEcOfferListApi(mLat, mLng);
         ecOfferListApi.setOfferListListener(this);
     }
@@ -276,10 +280,12 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     public void successOfferData(EcOfferListResponse ecOfferListResponse) {
         if (!this.isFinishing() || !this.isDestroyed() && ecOfferListResponse != null && ecOfferListResponse.getData() != null) {
             mEcOfferResponse = ecOfferListResponse;
+            Log.e("datacame", "true");
             mAdapter.setOfferResponse(mEcOfferResponse);
             List<EcOfferListResponse.DataBean> ecOfferListResponseList = new ArrayList<>();
             ecOfferListResponseList.addAll(ecOfferListResponse.getData());
             mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
+            mBinding.activityOfferProgress.setVisibility(View.GONE);
             if (ecOfferListResponseList.size() > 0) {
                 mOfferList.addAll(ecOfferListResponseList);
                 mAdapter.notifyDataSetChanged();
@@ -320,6 +326,7 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     public void failiure(String msg) {
         if (!this.isFinishing() || !this.isDestroyed() && !(TextUtils.isEmpty(msg))) {
             mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
+            mBinding.activityOfferProgress.setVisibility(View.GONE);
             if (CallBackListenerClass.getInstance().getmListener() != null) {
                 CallBackListenerClass.getInstance().getmListener().callBackOfOffer();
             }
@@ -398,6 +405,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
                 } else {
                     callOfferListApi();
                 }
+            } else {
+                mBinding.activityOfferProgress.setVisibility(View.GONE);
+                mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
             }
         }
 

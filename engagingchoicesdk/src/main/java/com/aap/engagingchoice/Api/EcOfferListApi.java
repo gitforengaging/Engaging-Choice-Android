@@ -18,10 +18,19 @@ import java.util.List;
  * This Class is used to call HttpEcOfferListApiThread
  */
 public class EcOfferListApi implements Handler.Callback {
+    private static EcOfferListApi mInstance;
     private Handler mHandler;
     private ListenerOfEcOfferListApi mOfferListDataListener;
 
-    public EcOfferListApi() {
+    private EcOfferListApi() {
+    }
+
+
+    public static EcOfferListApi getInstance() {
+        if (mInstance == null) {
+            mInstance = new EcOfferListApi();
+        }
+        return mInstance;
     }
 
     public void callEcOfferListApi(double lat, double lng) {
@@ -50,7 +59,7 @@ public class EcOfferListApi implements Handler.Callback {
                 mOfferListDataListener.failiure(failiureMsg);
             } else if (message.getData().containsKey(Constants.FAILIURE_INFO_EXCEPTION)) {
                 String failiureMsg = message.getData().getString(Constants.FAILIURE_INFO_EXCEPTION);
-                if(!TextUtils.isEmpty(failiureMsg)){
+                if (!TextUtils.isEmpty(failiureMsg)) {
                     mOfferListDataListener.failiure(failiureMsg);
                     Log.e("failiure", failiureMsg);
                 }
@@ -58,5 +67,12 @@ public class EcOfferListApi implements Handler.Callback {
         }
         mHandler.removeCallbacksAndMessages(null);
         return false;
+    }
+
+
+    public void removeAllCallbackAndMessages() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
     }
 }

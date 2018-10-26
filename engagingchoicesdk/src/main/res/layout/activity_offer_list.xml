@@ -63,11 +63,12 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/dummy_loading" />
 
-            <!--<ProgressBar
+            <ProgressBar
                 android:id="@+id/activity_offer_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />-->
+                android:visibility="visible"
+                android:layout_gravity="center" />
         </FrameLayout>
 
     </LinearLayout>
