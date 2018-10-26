@@ -392,10 +392,12 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             mLat = location.getLatitude();
             mLng = location.getLongitude();
             Log.e("location", String.valueOf(mLat + " " + mLng));
-            if (mSavedInstance == null) {
-                callApi();
-            } else {
-                callOfferListApi();
+            if (mEcOfferResponse == null) {
+                if (mSavedInstance == null) {
+                    callApi();
+                } else {
+                    callOfferListApi();
+                }
             }
         }
 
