@@ -41,6 +41,13 @@ public class VideoActivity extends AppCompatActivity {
             mc.setAnchorView(mBinding.activityVideoView);
             mBinding.activityVideoView.requestFocus();
             mBinding.activityVideoProgress.setVisibility(View.VISIBLE);
+            mBinding.activityVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                    finish();
+                    return true;
+                }
+            });
             mBinding.activityVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {

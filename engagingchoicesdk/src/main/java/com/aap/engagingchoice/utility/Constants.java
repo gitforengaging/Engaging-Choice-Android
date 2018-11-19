@@ -23,7 +23,7 @@ public class Constants {
     public static final int FILE_VIDEO = 2;
 
     /*API NAMES*/
-    public static final String BASE_URL = "https://engagingchoice-qa.kiwireader.com/publisherapi/";
+    public static final String BASE_URL = "https://engagingchoice-staging.kiwireader.com/publisherapi/";
     public static final String BASE_URL_DEV = "https://engagingchoice-dev.kiwireader.com/publisherapi/";
     public static final String BASE_URL_QA = "https://engagingchoice-qa.kiwireader.com/publisherapi/";
     public static final String BASE_URL_STAG = "https://engagingchoice-staging.kiwireader.com/publisherapi/";

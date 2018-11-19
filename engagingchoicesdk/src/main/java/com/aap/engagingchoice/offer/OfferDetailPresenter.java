@@ -26,6 +26,7 @@ public class OfferDetailPresenter {
 
     /**
      * Set listener of MVP Pattern
+     *
      * @param mvpView
      */
     public void setListener(OfferDetailMvpView mvpView) {
@@ -46,6 +47,7 @@ public class OfferDetailPresenter {
 
     /**
      * Call Offer Action Api
+     *
      * @param typeOfCount
      * @param mOfferData
      */
@@ -54,7 +56,12 @@ public class OfferDetailPresenter {
         ecOfferActionReq.setAction(typeOfCount);
         ecOfferActionReq.setEmail(EngagingChoiceKey.getInstance().getEmailId());
         ecOfferActionReq.setOffer_id(mOfferData.getId());
-        ecOfferActionReq.setContent_id(EngagingChoiceKey.getInstance().getContentId());
+        if (EngagingChoiceKey.getInstance().getContentId() == -1) {
+            ecOfferActionReq.setContent_id(-1);
+        } else {
+            ecOfferActionReq.setContent_id(EngagingChoiceKey.getInstance().getContentId());
+        }
+
         EcOfferActionApi ecOfferActionApi = new EcOfferActionApi(ecOfferActionReq);
         ecOfferActionApi.callEcOfferActionApi();
         CallBackClass.getInstance().getmListener().callBackListenerToOfferList();
@@ -67,6 +74,7 @@ public class OfferDetailPresenter {
 
     /**
      * This method open Offer url in webview
+     *
      * @param mOfferData - contains offer data
      */
     public void openWebView(EcOfferListResponse.DataBean mOfferData) {

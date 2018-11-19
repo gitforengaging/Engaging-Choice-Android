@@ -45,8 +45,13 @@ public class HttpEcOfferActionApiThread extends Thread {
             postDataParams.put(Constants.EMAIL, mRequestParam.getEmail());
             postDataParams.put(Constants.OFFER_ID, mRequestParam.getOffer_id());
             postDataParams.put(Constants.ACTION, mRequestParam.getAction());
-            postDataParams.put(Constants.CONTENT_ID, mRequestParam.getContent_id());
+            if (mRequestParam.getContent_id() == -1) {
 
+            } else {
+                postDataParams.put(Constants.CONTENT_ID, mRequestParam.getContent_id());
+            }
+
+            Log.e("requestparam", String.valueOf(postDataParams));
             urlConnection = (HttpURLConnection) url.openConnection();
             String publishSecretKey = EngagingChoiceKey.getInstance().getPublishSecretKey();
             if (!TextUtils.isEmpty(publishSecretKey)) {
@@ -82,6 +87,7 @@ public class HttpEcOfferActionApiThread extends Thread {
                     response += line;
                 }
                 msgOfUpdateInfo = new JSONObject(response).getString("detail");
+                Log.e("responseerror", msgOfUpdateInfo);
             } else {
                 String line;
                 BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));

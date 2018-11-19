@@ -1,123 +1,129 @@
 <layout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/frgament_home_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="com.aap.filmtime.home.HomeFragment">
+        android:layout_height="match_parent">
 
-
-        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        <ScrollView xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            tools:context="com.aap.filmtime.home.HomeFragment">
 
-            <TextView
+
+            <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginTop="@dimen/dp_15"
-                android:fontFamily="@font/opensans_semibold"
-                android:text="@string/most_popular"
-                android:textColor="@color/grey_343e4a"
-                android:textSize="@dimen/sp_12" />
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fragment_home_recyler_view_most_p"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/dp_4"
-                android:orientation="horizontal"
-                android:text="@string/hello_blank_fragment" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_15">
-
-                <LinearLayout
-                    android:id="@+id/fragment_home_engaging_choice_cont"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/most_popular"
+                    android:textColor="@color/grey_343e4a"
+                    android:textSize="@dimen/sp_12" />
 
-                    <TextView
-                        android:id="@+id/fragment_home_tv_engaging_choice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:fontFamily="@font/opensans_semibold"
-                        android:text="@string/engaging_choice"
-                        android:textColor="@color/grey_343e4a"
-                        android:textSize="@dimen/sp_12" />
-
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/fragment_home_recyler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:orientation="horizontal"
-                        android:text="@string/hello_blank_fragment" />
-
-                    <!--  <ProgressBar
-                          android:id="@+id/fragment_home_progress"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_gravity="center"
-                          android:visibility="gone" />
--->
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/fragment_home_new_release_dummy_cont"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fragment_home_recyler_view_most_p"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:orientation="horizontal"
+                    android:text="@string/hello_blank_fragment" />
 
-                    <TextView
-                        android:id="@+id/fragment_home_tv_new_release"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15">
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_engaging_choice_cont"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:fontFamily="@font/opensans_semibold"
-                        android:text="@string/new_releases"
-                        android:textColor="@color/grey_343e4a"
-                        android:textSize="@dimen/sp_12" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/fragment_home_tv_engaging_choice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="@string/engaging_choice"
+                            android:textColor="@color/grey_343e4a"
+                            android:textSize="@dimen/sp_12" />
 
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/fragment_home_recyler_view_new_release"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/fragment_home_recyler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:orientation="horizontal"
+                            android:text="@string/hello_blank_fragment" />
+
+                        <!--  <ProgressBar
+                              android:id="@+id/fragment_home_progress"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center"
+                              android:visibility="gone" />
+    -->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_new_release_dummy_cont"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:text="@string/hello_blank_fragment" />
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                </LinearLayout>
-            </FrameLayout>
+                        <TextView
+                            android:id="@+id/fragment_home_tv_new_release"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="@string/new_releases"
+                            android:textColor="@color/grey_343e4a"
+                            android:textSize="@dimen/sp_12" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginTop="@dimen/dp_15"
-                android:fontFamily="@font/opensans_semibold"
-                android:text="@string/recommended"
-                android:textColor="@color/grey_343e4a"
-                android:textSize="@dimen/sp_12" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fragment_home_recyler_view_recommended"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/dp_4"
-                android:orientation="horizontal"
-                android:text="@string/hello_blank_fragment" />
-        </LinearLayout>
-    </ScrollView>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/fragment_home_recyler_view_new_release"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:text="@string/hello_blank_fragment" />
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/recommended"
+                    android:textColor="@color/grey_343e4a"
+                    android:textSize="@dimen/sp_12" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fragment_home_recyler_view_recommended"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:orientation="horizontal"
+                    android:text="@string/hello_blank_fragment" />
+            </LinearLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

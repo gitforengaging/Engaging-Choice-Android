@@ -168,7 +168,8 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-            checkDeviceType();
+//            checkDeviceType();
+            setVisibilityOfPortrait();
         }
     }
 
@@ -218,7 +219,8 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-            checkDeviceType();
+//            checkDeviceType();
+            setVisibilityOfPortrait();
         }
     }
 

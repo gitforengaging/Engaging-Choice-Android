@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,21 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
         mBinding.fragmentHomeRecylerView.setNestedScrollingEnabled(false);
         mBinding.fragmentHomeRecylerViewMostP.setNestedScrollingEnabled(false);
         mBinding.fragmentHomeRecylerViewRecommended.setNestedScrollingEnabled(false);
-        // call content list api of Engaging Choice content - SDK
+        callContentlistApi();
+
+        // pull to refresh
+        mBinding.frgamentHomeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                callContentlistApi();
+            }
+        });
+    }
+
+    /**
+     * call content list api of Engaging Choice content - SDK
+     */
+    private void callContentlistApi() {
         if (Utils.isNetworkAvailable(getActivity(), true)) {
             mHomeFragPresenter.callContentListApi(this);
         }
@@ -89,6 +104,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
 
     /**
      * This method is called from Dummy Data Adapter
+     *
      * @param view
      * @param pos
      */
@@ -96,6 +112,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
     public void onClick(View view, int pos) {
         switch (view.getId()) {
             case R.id.row_of_engaging_ec_view:
+                EngagingChoiceKey.getInstance().setContentId(-1);
                 mHomeFragPresenter.goToDetailActivity(getActivity(), false, mEngagingChoiceList, mDummyList, pos);
                 break;
         }
@@ -104,6 +121,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
     /**
      * This method is called from Adapter
      * After click on Engaging choice SDK Content view then user will navigate to Detail screen
+     *
      * @param view
      * @param pos
      */
@@ -129,13 +147,16 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
 
     /**
      * This method is called from Engaging Choice SDK
+     *
      * @param list - contains the Content list of Engaging Choice SDK
      */
     @Override
     public void successData(List<EcContentResponse.DataBean> list) {
+        mBinding.frgamentHomeRefreshLayout.setRefreshing(false);
         if (list.size() > 0) {
             mBinding.fragmentHomeNewReleaseDummyCont.setVisibility(View.GONE);
             mBinding.fragmentHomeEngagingChoiceCont.setVisibility(View.VISIBLE);
+            mEngagingChoiceList.clear();
             mEngagingChoiceList.addAll(list);
             mAdapter.notifyDataSetChanged();
         } else {
@@ -147,13 +168,16 @@ public class HomeFragment extends Fragment implements OnItemClickListener, HomeF
 
     /**
      * This method is called from Enagaging Choice SDK
+     *
      * @param s contains msg if Content list api fails
      */
     @Override
     public void failiure(String s) {
+        mEngagingChoiceList.clear();
+        mBinding.frgamentHomeRefreshLayout.setRefreshing(false);
         mBinding.fragmentHomeNewReleaseDummyCont.setVisibility(View.VISIBLE);
         mBinding.fragmentHomeEngagingChoiceCont.setVisibility(View.GONE);
         mBinding.fragmentHomeTvEngagingChoice.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }
 }
