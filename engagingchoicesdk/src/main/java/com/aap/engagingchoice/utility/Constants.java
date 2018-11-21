@@ -76,5 +76,8 @@ public class Constants {
     public static final String OFFER_LIST_DATA = "offerlistdata";
     public static final int DIALOG_OPEN = 1;
     public static final int DIALOG_CLOSE = 0;
+
+    public static final String isGPSON = "isGPSON";
+    public static final String isGPSCANCEELD = "isGPSCANCEELD";
 }
 

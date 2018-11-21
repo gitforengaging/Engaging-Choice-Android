@@ -1,5 +1,6 @@
 package com.aap.engagingchoice.offer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,24 +37,32 @@ import com.aap.engagingchoice.utility.CallBackClass;
 import com.aap.engagingchoice.utility.CallbacklistenerOfOfferList;
 import com.aap.engagingchoice.utility.Constants;
 import com.aap.engagingchoice.utility.Utils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfferListActivity extends AppCompatActivity implements ListenerOfEcOfferListApi, OnItemClickListener, CallbacklistenerOfOfferList, LocationListener {
+public class OfferListActivity extends AppCompatActivity implements ListenerOfEcOfferListApi, OnItemClickListener, CallbacklistenerOfOfferList, com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     protected static final int REQUEST_CHECK_SETTINGS = 1000;
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 5;
     private ActivityOfferListBinding mBinding;
     private OfferListAdapter mAdapter;
     private List<EcOfferListResponse.DataBean> mOfferList = new ArrayList<>();
@@ -62,6 +72,9 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     private LocationManager locationManager;
     private double mLat, mLng;
     private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private boolean isGpsOn;
+    private boolean isGpsCancelled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,60 +89,128 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
         } else {
             mBinding.activityOfferIvLoadingLayout.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
+        createLocationRequest();
         if (mSavedInstance == null) {
-            mGoogleApiClient = getAPIClientInstance(this);
-            if (mGoogleApiClient != null) {
-                mGoogleApiClient.connect();
-            }
-            requestGPSSettings();
+            checkPermissionLoc();
         } else {
-            callApi();
+            String gpsOn = mSavedInstance.getString(Constants.isGPSON);
+            String gpsCancelled = mSavedInstance.getString(Constants.isGPSCANCEELD);
+            if (!TextUtils.isEmpty(gpsOn)) {
+                if (gpsOn.equalsIgnoreCase("1")) {
+                    isGpsOn = true;
+                } else {
+                    isGpsOn = false;
+                }
+            }
+            if (!TextUtils.isEmpty(gpsCancelled)) {
+                if (gpsCancelled.equalsIgnoreCase("1")) {
+                    isGpsCancelled = true;
+                } else {
+                    isGpsCancelled = false;
+                }
+            }
+            if (isGpsOn) {
+                getData();
+            } else if (isGpsCancelled) {
+                getData();
+            }
         }
+    }
+
+    private void getData() {
+        mEcOfferResponse = (EcOfferListResponse) mSavedInstance.getSerializable(Constants.OFFER_LIST_DATA);
+        if (mEcOfferResponse != null) {
+            successOfferData(mEcOfferResponse);
+        } else {
+            if (Utils.isNetworkAvailable(this, true))
+                callOfferListApi();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, OfferListActivity.this);
+        Log.d("OfferlistActivity", "Location update started ..............: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private GoogleApiClient getAPIClientInstance(Context context) {
         GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API).build();
+                .addApi(LocationServices.API).
+                        addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
         return mGoogleApiClient;
     }
 
     private void requestGPSSettings() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        locationRequest.setInterval(2000);
-        locationRequest.setFastestInterval(500);
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-        builder.setAlwaysShow(true);
-        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+        LocationSettingsRequest.Builder settingsBuilder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+        settingsBuilder.setAlwaysShow(true);
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(this)
+                .checkLocationSettings(settingsBuilder.build());
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
             @Override
-            public void onResult(LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        Log.i("", "All location settings are satisfied.");
-                        Log.e("canceled", "success");
-                        checkPermissionLoc();
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        Log.i("", "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings ");
-                        try {
-                            status.startResolutionForResult(OfferListActivity.this, REQUEST_CHECK_SETTINGS);
-                        } catch (IntentSender.SendIntentException e) {
-                            Log.e("Applicationsett", e.toString());
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        Log.i("", "Location settings are inadequate, and cannot be fixed here. Dialog " + "not created.");
-                        Toast.makeText(getApplication(), "Location settings are inadequate, and cannot be fixed here", Toast.LENGTH_SHORT).show();
-                        break;
-                    case LocationSettingsStatusCodes.CANCELED:
-                        Log.e("canceled", "cancelled");
-                        break;
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                try {
+                    LocationSettingsResponse response =
+                            task.getResult(ApiException.class);
+                    assert response != null;
+                    if (response.getLocationSettingsStates().isGpsUsable()) {
+                        isGpsOn = true;
+                        callGoogleApiClient();
+                    }
+                } catch (ApiException ex) {
+                    switch (ex.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            try {
+                                ResolvableApiException resolvableApiException =
+                                        (ResolvableApiException) ex;
+                                resolvableApiException
+                                        .startResolutionForResult(OfferListActivity.this,
+                                                REQUEST_CHECK_SETTINGS);
+                                isGpsOn = false;
+                            } catch (IntentSender.SendIntentException e) {
 
+                            }
+                            break;
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+
+                            break;
+                        case LocationSettingsStatusCodes.SUCCESS:
+                            break;
+                    }
                 }
             }
         });
+    }
+
+    private void callGoogleApiClient() {
+        mGoogleApiClient = getAPIClientInstance(OfferListActivity.this);
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
@@ -139,9 +220,12 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             switch (resultCode) {
                 case Activity
                         .RESULT_OK:
-                    checkPermissionLoc();
+                    isGpsCancelled = false;
+                    isGpsOn = true;
+                    callGoogleApiClient();
                     break;
                 case Activity.RESULT_CANCELED:
+                    isGpsCancelled = true;
                     if (mSavedInstance == null) {
                         callApi();
                     } else {
@@ -159,7 +243,7 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         } else {
-            getLocation();
+            requestGPSSettings();
         }
     }
 
@@ -176,8 +260,10 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 101) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLocation();
+                requestGPSSettings();
             } else {
+                isGpsOn = false;
+                isGpsCancelled = true;
                 // call offerlist api
                 if (mSavedInstance == null) {
                     callApi();
@@ -203,19 +289,6 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
         }
     }
 
-    /**
-     * This method is used to get location
-     */
-    public void getLocation() {
-        try {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            assert locationManager != null;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * This method is used to save data while orientation
@@ -226,6 +299,18 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.OFFER_LIST_DATA, mEcOfferResponse);
+        Bundle bundle = new Bundle();
+        if (isGpsOn) {
+            outState.putString(Constants.isGPSON, "1");
+        } else {
+            outState.putString(Constants.isGPSON, "0");
+        }
+        if (isGpsCancelled) {
+            outState.putString(Constants.isGPSCANCEELD, "1");
+        } else {
+            outState.putString(Constants.isGPSCANCEELD, "0");
+        }
+
     }
 
     /**
@@ -287,6 +372,7 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
             mBinding.activityOfferIvLoadingLayout.setVisibility(View.GONE);
             mBinding.activityOfferProgress.setVisibility(View.GONE);
             if (ecOfferListResponseList.size() > 0) {
+                mOfferList.clear();
                 mOfferList.addAll(ecOfferListResponseList);
                 mAdapter.notifyDataSetChanged();
                 if (ecOfferListResponse.getPagination().getIs_popup() == Constants.DIALOG_OPEN) {
@@ -414,17 +500,36 @@ public class OfferListActivity extends AppCompatActivity implements ListenerOfEc
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    protected void stopLocationUpdates() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(
+                    mGoogleApiClient, this);
+            Log.d("OfferlistActivity", "Location update stopped .......................");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
 
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }
