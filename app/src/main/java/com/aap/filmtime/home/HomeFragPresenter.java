@@ -55,6 +55,16 @@ public class HomeFragPresenter {
         return sponsorByList;
     }
 
+    public List<String> contentVideos() {
+        List<String> videoList = new ArrayList<>();
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/mtb64bnt3.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/vpg10eklt.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/4a7em1u80.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/6zwd175md.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/8gkqa2fl1.mp4");
+        return videoList;
+    }
+
     public void setDummyContentResp() {
         List<String> list = addAllUrls();
         for (int i = 0; i < list.size(); i++) {
@@ -63,6 +73,7 @@ public class HomeFragPresenter {
             dummyContentResp.setName(names().get(i));
             dummyContentResp.setTitle(names().get(i));
             dummyContentResp.setSponsoredBy(sponsorBy().get(i));
+            dummyContentResp.setVideoUrl(contentVideos().get(i));
             if (i % 2 == 0) {
                 dummyContentResp.setPoweredBy(true);
             } else {

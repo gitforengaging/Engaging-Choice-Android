@@ -59,9 +59,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.detail_play_icon:
                 if (mData.isPoweredBy()) {
                     goToOfferListActivity();
-                } else {
-                    // TODO Play video
-                    Toast.makeText(this, "playvideo", Toast.LENGTH_SHORT).show();
+                } else if (!TextUtils.isEmpty(mData.getVideoUrl())) {
+                    playVideo();
                 }
                 break;
         }

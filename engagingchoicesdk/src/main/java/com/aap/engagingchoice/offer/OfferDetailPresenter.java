@@ -3,6 +3,8 @@ package com.aap.engagingchoice.offer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.aap.engagingchoice.Api.EcOfferActionApi;
 import com.aap.engagingchoice.network.CallBackListenerClass;
@@ -54,7 +56,13 @@ public class OfferDetailPresenter {
     public void callActionApi(int typeOfCount, EcOfferListResponse.DataBean mOfferData) {
         EcOfferActionReq ecOfferActionReq = new EcOfferActionReq();
         ecOfferActionReq.setAction(typeOfCount);
-        ecOfferActionReq.setEmail(EngagingChoiceKey.getInstance().getEmailId());
+        String email = EngagingChoiceKey.getInstance().getEmailId();
+        if (!TextUtils.isEmpty(email)) {
+
+        } else {
+            email = "rinky.singh@kiwitech.com";
+        }
+        ecOfferActionReq.setEmail(email);
         ecOfferActionReq.setOffer_id(mOfferData.getId());
         if (EngagingChoiceKey.getInstance().getContentId() == -1) {
             ecOfferActionReq.setContent_id(-1);
