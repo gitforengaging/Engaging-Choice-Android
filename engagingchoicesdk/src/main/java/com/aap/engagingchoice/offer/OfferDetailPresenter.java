@@ -57,11 +57,6 @@ public class OfferDetailPresenter {
         EcOfferActionReq ecOfferActionReq = new EcOfferActionReq();
         ecOfferActionReq.setAction(typeOfCount);
         String email = EngagingChoiceKey.getInstance().getEmailId();
-        if (!TextUtils.isEmpty(email)) {
-
-        } else {
-            email = "rinky.singh@kiwitech.com";
-        }
         ecOfferActionReq.setEmail(email);
         ecOfferActionReq.setOffer_id(mOfferData.getId());
         if (EngagingChoiceKey.getInstance().getContentId() == -1) {

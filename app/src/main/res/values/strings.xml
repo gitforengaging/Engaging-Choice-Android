@@ -31,4 +31,9 @@
     <string name="dummy_2">01 – Incredibles2</string>
     <string name="dummy_1_detail_1">Incredibles 2 is a 2018 American 3D computer-animated superhero film produced by Pixar Animation Studios and released by Walt Disney Pictures.</string>
     <string name="dummy_1_powered_by_1">by Disney PIXAR</string>
+
+
+    <!--Validation of email id-->
+    <string name="empty_email_id">Please enter email address to continue</string>
+    <string name="email_validation">Please enter valid email.</string>
 </resources>

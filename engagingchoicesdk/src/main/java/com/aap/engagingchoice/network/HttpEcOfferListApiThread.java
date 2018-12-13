@@ -43,11 +43,6 @@ public class HttpEcOfferListApiThread extends Thread {
         HttpURLConnection urlConnection = null;
         try {
             String email = EngagingChoiceKey.getInstance().getEmailId();
-            if (!TextUtils.isEmpty(email)) {
-                Log.e("email", email);
-            }else {
-                email = "rinky.singh@kiwitech.com";
-            }
             if (mLat == 0 && mLng == 0) {
                 // null values
                 url = new URL(Constants.BASE_URL + Constants.OFFER_LIST_API + "/" + email);

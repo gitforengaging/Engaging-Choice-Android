@@ -54,7 +54,8 @@
                             android:fontFamily="@font/opensans_semibold"
                             android:text="@string/engaging_choice"
                             android:textColor="@color/grey_343e4a"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/sp_12"
+                            android:visibility="gone" />
 
 
                         <android.support.v7.widget.RecyclerView
