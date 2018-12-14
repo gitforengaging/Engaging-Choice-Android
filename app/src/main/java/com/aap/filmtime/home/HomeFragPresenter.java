@@ -57,11 +57,11 @@ public class HomeFragPresenter {
 
     public List<String> contentVideos() {
         List<String> videoList = new ArrayList<>();
-        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/mtb64bnt3.mp4");
-        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/vpg10eklt.mp4");
-        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/4a7em1u80.mp4");
-        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/6zwd175md.mp4");
-        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/8gkqa2fl1.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/mokczwvao.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/gmusf67dz.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/28yeh3aiq.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/oplv9vhro.mp4");
+        videoList.add("https://fn-prod-beta.s3.us-east-2.amazonaws.com/provider/content/e6kx6j89h.mp4");
         return videoList;
     }
 
