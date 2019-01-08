@@ -34,8 +34,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -43,11 +42,18 @@
                 android:layout_gravity="center">
 
 
-                <VideoView
-                    android:id="@+id/activity_video_view"
+                <!--    <VideoView
+                        android:id="@+id/activity_video_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center" />-->
+                <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                    android:id="@+id/activity_exoplayer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:controller_layout_id="@layout/exo_playback_control_view_custom"/>
+
 
                 <ProgressBar
                     android:id="@+id/activity_video_progress"
@@ -61,9 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:padding="@dimen/dp_5"
+                    android:padding="@dimen/dp_10"
                     android:visibility="visible">
 
                     <View
