@@ -37,9 +37,9 @@ EngagingChoiceKey
 
 Provide Secret key for configuration
 
-EngagingChoiceKey.getInstance().setPublishSecretKey(Constants.TOKEN_QA_VALUE);
+EngagingChoiceKey.getInstance().setPublishSecretKey(Constants.TOKEN_PROD);
 
-Replace SECRET_KEY with  Constants.TOKEN_QA_VALUE
+Replace SECRET_KEY with  Constants.TOKEN_PROD
 
 2. SECOND STEP
 
