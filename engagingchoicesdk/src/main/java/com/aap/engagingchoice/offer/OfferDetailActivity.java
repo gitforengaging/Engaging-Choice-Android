@@ -47,19 +47,14 @@ import com.google.android.exoplayer2.util.Util;
  */
 public class OfferDetailActivity extends AppCompatActivity implements OfferDetailMvpView {
 
-    private static final long DISPLAY_TIME = 100;
     private ActivityOfferDetailBinding mBinding;
-    private int mVideoPos;
     private String mVideo, mThumbNail, mFileBaseUrl;
     private EcOfferListResponse.DataBean mOfferData;
-    private boolean isVideoClicked = true, isPrepared = false;
     private Handler mHandler;
-    private Runnable mRunnable, mRunnable1, mRunnable2;
     private OfferDetailPresenter mPresenter;
     private SimpleExoPlayer player;
     private long playbackPosition;
     private int currentWindow;
-    private boolean playWhenReady = true;
     private int mFileType;
     private int count = 1;
 
@@ -85,7 +80,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         mBinding.activityDetailOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                setPlayPauseFunction();
             }
         });
 
@@ -149,24 +143,10 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-//            checkDeviceType();
             setVisibilityOfPortrait();
         }
     }
 
-    /**
-     * check device type - Tablet 7 or 10 or normal device
-     */
-    private void checkDeviceType() {
-        float smallestWidth = Utils.getDeviceWidth(OfferDetailActivity.this);
-        if (smallestWidth > 720) {
-            setVisibilityOfLandscape();
-        } else if (smallestWidth > 600) {
-            setVisibilityOfLandscape();
-        } else {
-            setVisibilityOfPortrait();
-        }
-    }
 
     /**
      * Remove handler when activity is destroyed
@@ -201,7 +181,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-//            checkDeviceType();
             setVisibilityOfPortrait();
         }
     }
@@ -465,7 +444,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (player != null) {
             playbackPosition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;
         }

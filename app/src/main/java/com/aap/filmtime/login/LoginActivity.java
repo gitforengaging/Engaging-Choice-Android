@@ -23,7 +23,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         mLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         mLoginBinding.loginTvSignin.setOnClickListener(this);
-        EngagingChoiceKey.getInstance().setPublishSecretKey(Constants.TOKEN_STAGING_VALUE);
+        EngagingChoiceKey.getInstance().setPublishSecretKey(Constants.TOKEN_PROD);
     }
 
     @Override
