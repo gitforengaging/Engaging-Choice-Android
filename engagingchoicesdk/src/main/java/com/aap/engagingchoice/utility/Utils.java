@@ -59,16 +59,4 @@ public class Utils {
         alertDialog.show();
     }
 
-    public static float getDeviceWidth(Activity activity) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int widthPixels = metrics.widthPixels;
-        int heightPixels = metrics.heightPixels;
-
-        float scaleFactor = metrics.density;
-        float widthDp = widthPixels / scaleFactor;
-        float heightDp = heightPixels / scaleFactor;
-        float smallestWidth = Math.min(widthDp, heightDp);
-        return smallestWidth;
-    }
 }

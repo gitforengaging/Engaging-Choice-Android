@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,21 +22,41 @@ import com.aap.engagingchoice.pojo.EcOfferListResponse;
 import com.aap.engagingchoice.utility.Constants;
 import com.aap.engagingchoice.utility.Utils;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 /**
  * This Activity shows offer detail
  */
 public class OfferDetailActivity extends AppCompatActivity implements OfferDetailMvpView {
 
-    private static final long DISPLAY_TIME = 100;
     private ActivityOfferDetailBinding mBinding;
-    private int mVideoPos;
     private String mVideo, mThumbNail, mFileBaseUrl;
     private EcOfferListResponse.DataBean mOfferData;
-    private boolean isVideoClicked = true, isPrepared = false;
     private Handler mHandler;
-    private Runnable mRunnable, mRunnable1, mRunnable2;
     private OfferDetailPresenter mPresenter;
+    private SimpleExoPlayer player;
+    private long playbackPosition;
+    private int currentWindow;
+    private int mFileType;
+    private int count = 1;
 
 
     @Override
@@ -42,6 +64,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_offer_detail);
         setUiAccordingtoOrientation();
         setClickListener();
@@ -57,7 +80,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         mBinding.activityDetailOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPlayPauseFunction();
             }
         });
 
@@ -113,53 +135,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         });
     }
 
-    /**
-     * Set play and pause video
-     */
-    private void setPlayPauseFunction() {
-        if (isPrepared) {
-            if (isVideoClicked) {
-
-                // show pause button and hide visibiliy of button
-                int length = mBinding.activityDetailVvOffer.getDuration();
-                mVideoPos = mBinding.activityDetailVvOffer.getCurrentPosition();
-                if (mVideoPos != length) {
-                    mBinding.activityOfferIvPlayPause.setVisibility(View.VISIBLE);
-                    mBinding.activityOfferIvPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.pause_icon));
-                    mRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            isVideoClicked = false;
-                            mBinding.activityOfferIvPlayPause.setVisibility(View.VISIBLE);
-                            mBinding.activityOfferIvPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.ec_play_icon));
-                            mVideoPos = mBinding.activityDetailVvOffer.getCurrentPosition();
-                            mBinding.activityDetailVvOffer.pause();
-                        }
-                    };
-                    if (mHandler != null)
-                        mHandler.postDelayed(mRunnable, DISPLAY_TIME);
-                }
-            } else {
-                // show play button and hide visibiliy of button
-                int length = mBinding.activityDetailVvOffer.getDuration();
-                if (mVideoPos != length) {
-                    mBinding.activityOfferIvPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.pause_icon));
-                    mRunnable1 = new Runnable() {
-                        @Override
-                        public void run() {
-                            isVideoClicked = true;
-                            mBinding.activityOfferIvPlayPause.setVisibility(View.GONE);
-                            mBinding.activityDetailVvOffer.seekTo(mVideoPos);
-                            mBinding.activityDetailVvOffer.start();
-                        }
-                    };
-                    if (mHandler != null)
-                        mHandler.postDelayed(mRunnable1, DISPLAY_TIME);
-                }
-
-            }
-        }
-    }
 
     /**
      * UI will change according to orientation
@@ -168,24 +143,10 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-//            checkDeviceType();
             setVisibilityOfPortrait();
         }
     }
 
-    /**
-     * check device type - Tablet 7 or 10 or normal device
-     */
-    private void checkDeviceType() {
-        float smallestWidth = Utils.getDeviceWidth(OfferDetailActivity.this);
-        if (smallestWidth > 720) {
-            setVisibilityOfLandscape();
-        } else if (smallestWidth > 600) {
-            setVisibilityOfLandscape();
-        } else {
-            setVisibilityOfPortrait();
-        }
-    }
 
     /**
      * Remove handler when activity is destroyed
@@ -196,6 +157,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
+        releasePlayer();
     }
 
     /**
@@ -219,7 +181,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setVisibilityOfLandscape();
         } else {
-//            checkDeviceType();
             setVisibilityOfPortrait();
         }
     }
@@ -335,41 +296,32 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
                 }
                 break;
         }
-        int fileType = data.getFile_type();
-        switch (fileType) {
+        mFileType = data.getFile_type();
+        switch (mFileType) {
             case Constants.FILE_IMAGE:
                 mThumbNail = mFileBaseUrl + data.getFile_name();
                 Glide.with(this).load(mThumbNail).into(mBinding.activityDetailIvOffer);
-                mBinding.activityDetailVvOffer.setVisibility(View.GONE);
+                mBinding.activityDetailExoplayer.setVisibility(View.GONE);
                 mBinding.activityOfferProgress.setVisibility(View.GONE);
                 break;
             case Constants.FILE_VIDEO:
+                hideSystemUi();
                 mBinding.activityOfferProgress.setVisibility(View.VISIBLE);
+                mBinding.activityDetailOverlay.setVisibility(View.GONE);
                 mVideo = mFileBaseUrl + data.getFile_name();
-                mBinding.activityDetailVvOffer.setVideoURI(Uri.parse(mVideo));
                 mBinding.activityDetailIvOffer.setVisibility(View.GONE);
-                mBinding.activityDetailVvOffer.requestFocus();
-                mBinding.activityDetailVvOffer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        isPrepared = true;
-                        mBinding.activityOfferProgress.setVisibility(View.GONE);
-                        mVideoPos = mp.getCurrentPosition();
-                        mBinding.activityDetailVvOffer.start();
-                        mBinding.activityOfferIvPlayPause.setVisibility(View.VISIBLE);
-                        mBinding.activityOfferIvPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.ec_play_icon));
-                        mRunnable2 = new Runnable() {
-                            @Override
-                            public void run() {
-                                mBinding.activityOfferIvPlayPause.setVisibility(View.GONE);
-                            }
-                        };
-                        if (mHandler != null)
-                            mHandler.postDelayed(mRunnable2, DISPLAY_TIME);
-                    }
-                });
+                initializePlayer();
                 break;
         }
+    }
+
+    private void hideSystemUi() {
+        mBinding.activityDetailExoplayer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     /**
@@ -380,5 +332,153 @@ public class OfferDetailActivity extends AppCompatActivity implements OfferDetai
     @Override
     public void setPaginationData(EcOfferListResponse.PaginationBean data) {
         mFileBaseUrl = data.getFile_url();
+    }
+
+    private void initializePlayer() {
+
+        player = ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(this),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+
+        mBinding.activityDetailExoplayer.setPlayer(player);
+
+        Uri uri = Uri.parse(mVideo);
+        MediaSource mediaSource = buildMediaSource(uri);
+        player.prepare(mediaSource, true, false);
+        player.setPlayWhenReady(true);
+        player.seekTo(currentWindow, playbackPosition);
+
+
+        if (Utils.isNetworkAvailable(this, false)) {
+            mBinding.activityOfferProgress.setVisibility(View.VISIBLE);
+        } else {
+            if (count == 1) {
+                Utils.showMessageS(getString(R.string.no_network), this);
+            }
+            count++;
+            mBinding.activityOfferProgress.setVisibility(View.GONE);
+        }
+
+
+
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+                if (Utils.isNetworkAvailable(OfferDetailActivity.this, false)) {
+                    if (isLoading) {
+                        mBinding.activityOfferProgress.setVisibility(View.VISIBLE);
+                    }else {
+                        count =1;
+                        mBinding.activityOfferProgress.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            }
+
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
+
+            }
+
+            @Override
+            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                releasePlayer();
+                initializePlayer();
+            }
+
+            @Override
+            public void onPositionDiscontinuity(int reason) {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+
+            @Override
+            public void onSeekProcessed() {
+
+            }
+        });
+        player.addVideoListener(new SimpleExoPlayer.VideoListener() {
+            @Override
+            public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+
+            }
+
+            @Override
+            public void onRenderedFirstFrame() {
+                mBinding.activityOfferProgress.setVisibility(View.GONE);
+            }
+        });
+
+
+    }
+
+    private MediaSource buildMediaSource(Uri uri) {
+        return new ExtractorMediaSource.Factory(
+                new DefaultHttpDataSourceFactory("exoplayer-codelab")).
+                createMediaSource(uri);
+    }
+
+    private void releasePlayer() {
+        if (player != null) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            player.release();
+            player = null;
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT <= 23 || player == null)) {
+            if (mFileType == Constants.FILE_VIDEO) {
+                hideSystemUi();
+                initializePlayer();
+            }
+        }
     }
 }
