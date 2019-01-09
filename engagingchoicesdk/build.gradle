@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.MIN_SDK_VERSION // minmum sdk version
         targetSdkVersion rootProject.COMPILE_SDK_VERSION // target sdk version
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -70,7 +70,7 @@ artifacts {
 }
 
 group = 'com.aap.engagingchoice' // library package name
-version = '1.0.0' // library version
+version = '1.0.1' // library version
 
 install {
     repositories.mavenInstaller {
@@ -83,7 +83,7 @@ install {
             packaging 'aar'
             groupId 'com.aap.engagingchoice' // package name of your library
             artifactId 'engagingchoicesdk' //must be same of library name as bintray
-            version '1.0.0'
+            version '1.0.1'
 
             licenses {
                 license {
@@ -138,10 +138,10 @@ bintray {
         vcsUrl = 'https://github.com/gitforengaging/Engaging-Choice-Android.git'
         publish = true
         version {
-            name = '1.0.0'
-            desc = 'This is updated version 1.0.0'
+            name = '1.0.1'
+            desc = 'This is updated version 1.0.1'
             released = new Date()
-            vcsTag = 'v1.0.0'
+            vcsTag = 'v1.0.1'
         }
     }
 }
