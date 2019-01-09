@@ -151,7 +151,7 @@ EngagingChoice is available https://bintray.com/engagingchoice1994/EngagingChoic
 
 you can simply add the follow line to your build.gradle.
 
-compile 'com.aap.engagingchoice:engagingchoicesdk:1.0.0'
+compile 'com.aap.engagingchoice:engagingchoicesdk:1.0.2'
 
 
 
